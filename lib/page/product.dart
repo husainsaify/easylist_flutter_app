@@ -7,6 +7,23 @@ class ProductPage extends StatelessWidget {
 
   ProductPage({this.title, this.imageUrl});
 
+  _WarningAlertDialog(BuildContext context) {
+    showDialog(context: context, builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Are your sure?"),
+        content: Text("Delete this file sjsj jsjs ajiss"),
+        actions: <Widget>[
+          FlatButton(onPressed: () {
+            Navigator.pop(context);
+          }, child: Text("CANCEL")),
+          FlatButton(onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context, true);
+          }, child: Text("DELETE")),
+        ],);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(child: Scaffold(
@@ -28,16 +45,14 @@ class ProductPage extends StatelessWidget {
                     .of(context)
                     .primaryColor,
                 child: Text("Delete"),
-                onPressed: () {
-                  Navigator.pop(context,true);
-                },
+                onPressed: () => _WarningAlertDialog(context),
               ), //RaisedButton
             ),
           ], //Children
         ), //Body
       ), //body
-    ), onWillPop: (){
-      Navigator.pop(context,false);
+    ), onWillPop: () {
+      Navigator.pop(context, false);
       return Future.value(false);
     }); //willpopscope
   }
